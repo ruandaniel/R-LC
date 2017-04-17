@@ -4,19 +4,14 @@ public:
     bool isMatch(string s, string p) {
         if (s.empty() && p.empty()) return true;
         else if (p.empty()) return false;
-
         if (p[1] == '*'){
-            if (p[0] != '.'){
-                return isMatch(s, p.substr(2)) || (!s.empty() && s[0] == p[0] && isMatch(s.substr(1), p));
-            }
-            else{
-                return isMatch(s, p.substr(2)) || (!s.empty() && isMatch(s.substr(1), p));
-            }
+            return isMatch(s, p.substr(2)) || (!s.empty() && (s[0] == p[0] || p[0] == '.') && isMatch(s.substr(1), p));
         }
         else{
             return !s.empty() && (p[0] == '.' || s[0] == p[0]) && isMatch(s.substr(1), p.substr(1));
         }
     }
+
 };
 
 //DP
