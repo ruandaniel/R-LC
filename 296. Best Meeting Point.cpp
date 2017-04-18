@@ -1,8 +1,10 @@
+//if you have different numbers of people on your left and on your right
+//moving a little to the side with more people decreases the sum of distances
+//find the median
+
+//Method 1: collect sum, find mid for row and col, calculate distance
 class Solution {
 public:
-    //if you have different numbers of people on your left and on your right
-    //moving a little to the side with more people decreases the sum of distances
-    //find the median
     int minTotalDistance(vector<vector<int>>& grid) {
         if (grid.empty()) return 0;
         int m = grid.size(), n = grid[0].size(), total = 0;
@@ -38,5 +40,39 @@ public:
         return res;
     }
 };
-
 //T = O(m*n), S = O(m+n)
+
+//Method 2: collect sum, from two end, pair one with one, sum distance
+class Solution{
+public:
+    int minTotalDistance(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<int> row(m, 0), col(n, 0);
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                row[i] += grid[i][j];
+                col[j] += grid[i][j];
+            }
+        }
+        int res = 0;
+        int i = 0, j = m - 1;
+        while (i < j){
+            int cur = min(row[i], row[j]);
+            row[i] -= cur;
+            row[j] -= cur;
+            res += cur * (j - i);
+            while (i < j && row[i] == 0) i++;
+            while (i < j && row[j] == 0) j--;
+        }
+        i = 0; j = n - 1;
+        while (i < j){
+            int cur = min(col[i], col[j]);
+            col[i] -= cur;
+            col[j] -= cur;
+            res += cur * (j - i);
+            while (i < j && col[i] == 0) i++;
+            while (i < j && col[j] == 0) j--;
+        }
+        return res;
+    }
+};
