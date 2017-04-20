@@ -1,5 +1,4 @@
 class Solution {
-
 public:
     //maintain a window to store indexes, each time check the front 
     //when add a new one, from the back, delete all indexes that num smaller than the new one, because it will never be a max of a window

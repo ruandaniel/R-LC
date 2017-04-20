@@ -11,7 +11,7 @@ public:
                     cur -= nums[i];
                     i++;
                 }
-                res = min(res, j-i+1);
+                res = min(res, j - i + 1);
             }
             j++;
         }
